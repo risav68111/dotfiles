@@ -106,7 +106,7 @@ ln -sf "$WALLPAPER" ~/.cache/current_wallpaper
 
 # 7. RESTART & NOTIFY
 # pkill -USR2 waybar 2>/dev/null || true
-kill waybar && 
+killall waybar &&  
 waybar  & 
 hyprctl reload
 echo "$NEXT" > "$STATE_FILE"
