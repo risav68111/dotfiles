@@ -39,7 +39,7 @@ fi
 stow "$SELECTED_THEME"
 
 ( sleep 1
-  bash ~/.config/scripts/wallpaper_changer.sh ) &
+  bash ~/.config/scripts/wallpaper.sh ) &
 
 hyprctl reload
 pkill waybar &&
