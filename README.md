@@ -28,3 +28,8 @@ chmod +x ~/dotfiles/Default/.config/scripts/theme_selector.sh
 bash ~/dotfiles/Default/.config/scripts/theme_selector.sh
 ``` 
 then select theme.
+
+---
+____
+## For Wallpapers
+keep in '`~/.config/wallpapers`' and keep the if you want to change different wallpapers changes through theme then keep in '`~/dotfiles/<theme>/.config/wallpapers/`' 
