@@ -2,7 +2,6 @@
 
 set -euo pipefail
 
-
 ROFI_THEME="$HOME/.config/rofi/themes/wallpaper-grid.rasi"
 WALL_DIR="$HOME/.config/wallpapers"
 DEFAULT_WALL="/usr/share/hypr/wall0.png"

@@ -38,7 +38,8 @@
       "network#icon",
       "battery",
       "custom/notification",
-      "custom/wlogout"
+      "custom/wlogout",
+      "custom/record"
     ],
     "hyprland/workspaces": {
       "format": "{name}:{icon}",
@@ -199,6 +200,13 @@
       "tooltip": false,
       "on-click": "wlogout"
     },
+
+    "custom/record": {
+      "format": "Record",
+      "tooltip": false,
+      "on-click": "bash ~/.config/scripts/record_tui.sh"
+    },
+
     "custom/apps": {
       "format": "  Apps",
       "tooltip": false,
