@@ -12,8 +12,7 @@
       "wlr/taskbar"
     ],
     "modules-center": [
-      "hyprland/workspaces",
-      "custom/wlogout"
+      "hyprland/workspaces"
       // , "custom/window-controls"
       // , "custom/close-window"
       // , "custom/close_focused"
@@ -27,6 +26,7 @@
       "battery",
       "clock",
       "custom/notification",
+      "custom/wlogout"
     ],
     "hyprland/workspaces": {
       "format": "{name}:{icon}",
@@ -86,7 +86,7 @@
     // },
     "cpu": {
       "interval": 1,
-      "format": "{icon0}{icon1}{icon2}{icon3}{usage:>2}%",
+      "format": " {icon0}{icon1}{icon2}{icon3} {usage:>2}%",
       "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
       "on-click": "kitty -e btop"
     },
@@ -124,7 +124,7 @@
 
     "backlight": {
       "format": "{icon}{percent}%",
-      "format-icons": ["", "󰃜", "󰃛", "󰃞", "󰃝", "󰃟", "󰃠"],
+      "format-icons": [" ", "󰃜 ", "󰃛 ", "󰃞 ", "󰃝 ", "󰃟 ", "󰃠 "],
       "tooltip": false,
       "on-click": "brightnessctl set 5%+",
       "on-click-right": "brightnessctl set 5%-"
@@ -217,7 +217,6 @@
       "ignore-list": ["waybar"],
       "app-icon-size": 20
     }
-
   }
 ]
 
