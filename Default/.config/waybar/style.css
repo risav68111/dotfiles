@@ -133,6 +133,7 @@
   transition: all 0.5s ease-in-out;
 }
 
+#temperature:hover,
 #cpu:hover, 
 #memory:hover {
   color:rgba(0, 0, 0, 1);

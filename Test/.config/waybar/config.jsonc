@@ -80,7 +80,7 @@
       // "interface": "wlo1",
       "format-wifi": "{icon} {signalStrength}%",
       "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
-      "format-ethernet": "󰈀 {ifname}",
+      "format-ethernet": "󰈀 ",
       "format-linked": "󰌷 {ifname} (No IP)",
       "format-disconnected": "󰤭 Disconnected",
       "tooltip-format": "{essid} | {ipaddr}",
