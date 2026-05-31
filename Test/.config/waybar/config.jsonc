@@ -145,8 +145,10 @@
       "format": "{icon} {percent}%",
       "format-icons": [" ", "󰃜 ", "󰃛 ", "󰃞 ", "󰃝 ", "󰃟 ", "󰃠 "],
       "tooltip": false,
-      "on-click": "brightnessctl set 5%+",
-      "on-click-right": "brightnessctl set 5%-"
+      "on-scroll-up": "~/.config/scripts/brightness.sh up",
+      "on-scroll-down": "~/.config/scripts/brightness.sh down",
+      "on-click": "~/.config/scripts/brightness.sh up",
+      "on-click-right": "~/.config/scripts/brightness.sh down"
     },
 
     "backlight/slider": {
@@ -154,8 +156,8 @@
       "max": 100,
       "orientation": "horizontal",
       "device": "intel_backlight",
-      "on-scroll-up": "brightnessctl set 1%+",
-      "on-scroll-down": "brightnessctl set 1%-",
+      "on-scroll-up": "~/.config/scripts/brightness.sh up",
+      "on-scroll-down": "~/.config/scripts/brightness.sh down",
       "on-click": "brightnessctl set {percent}%"
     },
 
