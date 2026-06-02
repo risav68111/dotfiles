@@ -14,3 +14,5 @@ require("module.appearance")
 require("module.inputs")
 require("module.keybinds")
 require("module.display")
+
+hl.config({ cursor = { default_monitor = "HDMI-A-2" } })
