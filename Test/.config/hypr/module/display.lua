@@ -1,17 +1,21 @@
 local externaldisplay = "HDMI-A-2"
 local laptopdisplay = "eDP-1"
+
+local rotaionVal = 1
+local rotate = {"2560x300", "1440x900"}
+
 hl.monitor({
   output = externaldisplay,
   mode = "modeline 542.25 2560 2776 3056 3552 1440 1443 1448 1527 -hsync +vsync",
   position = "0x0",
   scale = 1,
-  transform = 0 -- rotation
+  transform = rotaionVal -- rotation
 })
 
 hl.monitor({
   output = laptopdisplay,
   mode = "1920x1080",
-  position = "2560x300",
+  position = rotate[rotaionVal + 1],
   scale = 1,
   transform = 0
 })
