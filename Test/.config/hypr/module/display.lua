@@ -1,8 +1,13 @@
 local externaldisplay = "HDMI-A-2"
 local laptopdisplay = "eDP-1"
 
-local rotaionVal = 1
-local rotate = {"2560x300", "1440x900"}
+local rotaionVal = 0
+local rotate = {
+  [0] = "2560x300", [1] = "1440x900"
+}
+
+
+hl.config({ cursor = { default_monitor = externaldisplay } })
 
 hl.monitor({
   output = externaldisplay,
@@ -15,7 +20,7 @@ hl.monitor({
 hl.monitor({
   output = laptopdisplay,
   mode = "1920x1080",
-  position = rotate[rotaionVal + 1],
+  position = rotate[rotaionVal],
   scale = 1,
   transform = 0
 })
