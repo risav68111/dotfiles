@@ -4,7 +4,7 @@ import QtQuick.Layouts
 Rectangle {
     id: dateTime
     property var color_on_hover: "#1a3b30"
-    anchors.centerIn: parent
+    // anchors.centerIn: parent
     height: 32
     width: 110
     color: color_on_hover
@@ -22,6 +22,34 @@ Rectangle {
 
         function pad(n) {
             return String(n).padStart(2, '0');
+        }
+
+        Text {
+            Layout.alignment: Qt.AlignHCenter
+            color: "#0db947"
+            font {
+                pixelSize: parent.fontPixelSize + 3
+                bold: true
+            }
+            text: subDateTime.pad(new Date().getHours()) + ":" + subDateTime.pad(new Date().getMinutes())
+            horizontalAlignment: Text.AlignHCenter
+            Timer {
+                interval: 1000
+                running: true
+                repeat: true
+                onTriggered: parent.text = subDateTime.pad(new Date().getHours()) + " : " + subDateTime.pad(new Date().getMinutes())
+            }
+        }
+
+        Text {
+            Layout.alignment: Qt.AlignHCenter
+            padding: 0
+            color: "#a49f99"
+            font {
+                pixelSize: parent.fontPixelSize + 10
+                // bold: true
+            }
+            text: "⟠"
         }
 
         Text {
@@ -63,34 +91,6 @@ Rectangle {
                 running: true
                 repeat: true
                 onTriggered: parent.text = subDateTime.pad(new Date().getMonth() + 1)
-            }
-        }
-
-        Text {
-            Layout.alignment: Qt.AlignHCenter
-            padding: 0
-            color: "#a49f99"
-            font {
-                pixelSize: parent.fontPixelSize + 10
-                // bold: true
-            }
-            text: "I"
-        }
-
-        Text {
-            Layout.alignment: Qt.AlignHCenter
-            color: "#0db947"
-            font {
-                pixelSize: parent.fontPixelSize + 3
-                bold: true
-            }
-            text: subDateTime.pad(new Date().getHours()) + ":" + subDateTime.pad(new Date().getMinutes())
-            horizontalAlignment: Text.AlignHCenter
-            Timer {
-                interval: 1000
-                running: true
-                repeat: true
-                onTriggered: parent.text = subDateTime.pad(new Date().getHours()) + " : " + subDateTime.pad(new Date().getMinutes())
             }
         }
     }

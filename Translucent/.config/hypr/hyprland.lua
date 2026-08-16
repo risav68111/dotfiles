@@ -1,16 +1,45 @@
-MAIN_MOD = "SUPER"
-TERMINAL = "kitty"
-FILE_MANAGER = "thunar"
-MENU = "rofi -show drun -theme ~/.config/rofi/themes/drun-translucent.rasi"
+-- This file sources other files in `hyprland` and `custom` folders
+-- You wanna add your stuff in files in `custom`
 
-hl.bind("SUPER" .. " + Q", hl.dsp.exec_cmd(TERMINAL))
--- enviroment variables
+-- Internal stuff --
+require("hyprland.lib")
+require("hyprland.services")
 
-hl.env("XCURSOR_SIZE", "24")
-hl.env("HYPRCURSOR_SIZE", "24")
+-- Environment variables --
+require("hyprland.env")
+if is_file_exists(HOME .. "/.config/hypr/custom/env.lua") then
+    require("custom.env")
+end
 
-require("module.autostart")
-require("module.appearance")
-require("module.inputs")
+-- Default configurations --
+require("hyprland.execs")
+require("hyprland.general")
+require("hyprland.rules")
+require("hyprland.colors")
+require("hyprland.keybinds")
 require("module.keybinds")
-require("module.display")
+
+-- Custom configurations --
+if is_file_exists(HOME .. "/.config/hypr/custom/execs.lua") then
+    require("custom.execs")
+end
+if is_file_exists(HOME .. "/.config/hypr/custom/general.lua") then
+    require("custom.general")
+end
+if is_file_exists(HOME .. "/.config/hypr/custom/rules.lua") then
+    require("custom.rules")
+end
+if is_file_exists(HOME .. "/.config/hypr/custom/keybinds.lua") then
+    require("custom.keybinds")
+end
+
+-- nwg-displays support --
+if is_file_exists(HOME .. "/.config/hypr/workspaces.lua") then
+    require("workspaces")
+end
+if is_file_exists(HOME .. "/.config/hypr/monitors.lua") then
+    require("monitors")
+end
+
+-- Shell overrides --
+require("hyprland.shellOverrides.main")

@@ -3,7 +3,7 @@ TERMINAL = "kitty"
 FILE_MANAGER = "thunar"
 MENU = "rofi -show drun -theme ~/.config/rofi/themes/drun-translucent.rasi"
 
-hl.bind("SUPER" .. " + Q", hl.dsp.exec_cmd(TERMINAL))
+-- hl.bind("SUPER" .. " + Q", hl.dsp.exec_cmd(TERMINAL))
 -- enviroment variables
 
 hl.env("XCURSOR_SIZE", "24")

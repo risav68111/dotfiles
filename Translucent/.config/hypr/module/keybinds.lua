@@ -1,8 +1,6 @@
 -- keybinds
 
-hl.bind(MAIN_MOD .. " + Return", hl.dsp.exec_cmd(TERMINAL)) --terminal
-hl.bind(MAIN_MOD .. " + Space", hl.dsp.exec_cmd(MENU))      --app select menu rofi
-hl.bind(MAIN_MOD .. " + E", hl.dsp.exec_cmd(FILE_MANAGER))      -- file manager
+MAIN_MOD = "SUPER"
 hl.bind(MAIN_MOD .. " + C", hl.dsp.window.close())          -- Close window
 
 --screenshots
