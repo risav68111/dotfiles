@@ -65,7 +65,7 @@ Rectangle {
 
     Rectangle {
 
-        radius: leftSideBarRect.radius
+        radius: 30
         // topRightRadius: 6
         // bottomRightRadius: 6
         // topLeftRadius: leftSideBarRect.radius
@@ -106,8 +106,8 @@ Rectangle {
         id: workspaceMainRect
         width: parent.width - 4
         height: parent.height - 4
-        color: "#666666"
-        radius: leftSideBarRect.radius
+        color: "transparent"
+        radius: 30
         // topRightRadius: 6
         // bottomRightRadius: 6
         // topLeftRadius: (leftSideBarRect.radius )

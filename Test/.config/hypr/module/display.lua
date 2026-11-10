@@ -39,3 +39,27 @@ hl.workspace_rule({ workspace = "8", monitor = laptopdisplay })
 hl.workspace_rule({ workspace = "9", monitor = laptopdisplay })
 hl.workspace_rule({ workspace = "10", monitor = laptopdisplay })
 -- hl.workspace_rule({ workspace = "2", no_rounding = true, decorate = false, gaps_in = 0, gaps_out = 0, no_border = true, monitor = externaldisplay })
+
+
+
+-- local externalWidth = 1440
+-- local externalHeight = 2560
+--
+-- local laptopWidth = 1920
+-- local laptopHeight = 1080
+--
+-- hl.monitor({
+--   output = externaldisplay,
+--   mode = "modeline 542.25 2560 2776 3056 3552 1440 1443 1448 1527 -hsync +vsync",
+--   position = laptopWidth .. "x0",
+--   scale = 1,
+--   transform = rotationVal
+-- })
+--
+-- hl.monitor({
+--   output = laptopdisplay,
+--   mode = "1920x1080",
+--   position = "0x" .. ((externalHeight - laptopHeight) / 2),
+--   scale = 1,
+--   transform = 0
+-- })

@@ -1,6 +1,7 @@
 import Quickshell
 import QtQuick
 import Quickshell.Wayland
+import Quickshell.Io
 import QtQuick.Layouts
 import Quickshell.Hyprland
 import "modules"
@@ -15,14 +16,15 @@ ShellRoot {
 
     property var sidebarThickness: 32
     VolumeOSD {}
-    BrightnessOSD{}
+    BrightnessOSD {}
+    // NotificationPopups {}
 
     PanelWindow {
-        id: leftSideBar
+        id: shellRootId
         // screen: Quickshell.screens.find(s => s.name === "eDP-1")
         screen: Quickshell.screens.find(s => s.name === "HDMI-A-2")
-        anchors.top:true 
-        anchors.bottom: false 
+        anchors.top: true
+        anchors.bottom: false
         anchors.left: true
         anchors.right: true
         exclusiveZone: root.sidebarThickness
@@ -41,7 +43,7 @@ ShellRoot {
             height: parent.height
             width: parent.width
             color: "transparent"
-            radius: 30
+            radius: 0
 
             // gradient: Gradient {
             //     // orientation: Gradient.Horizontal
@@ -64,103 +66,226 @@ ShellRoot {
                 // required property int index
                 anchors.fill: parent
                 spacing: 0
-                Rectangle {
-                    Layout.alignment: Qt.AlignVCenter
-                    color: 'transparent'
-                    // Layout.fillWidth: true
-                    Layout.preferredWidth: workspacesItem.dynamicWidth
 
+                Item {
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: 1      // same as the right zone = equal share
                     Layout.fillHeight: true
-                    Layout.minimumHeight: 15
-                    Layout.preferredHeight: 28
+                    clip: true
 
-                    Workspaces {
-                        id: workspacesItem
-                    }
+                    RowLayout {
+                        anchors.fill: parent
+                        spacing: 0
 
-                    Behavior on Layout.preferredWidth {
-                        NumberAnimation {
-                            duration: 150
-                            easing.type: Easing.InOutQuad
+                        Rectangle {
+                            Layout.alignment: Qt.AlignVCenter
+                            color: 'transparent'
+                            // Layout.fillWidth: true
+                            Layout.preferredWidth: workspacesItem.dynamicWidth
+
+                            Layout.fillHeight: true
+                            Layout.minimumHeight: 15
+                            Layout.preferredHeight: 28
+
+                            Workspaces {
+                                id: workspacesItem
+                            }
+
+                            Behavior on Layout.preferredWidth {
+                                NumberAnimation {
+                                    duration: 150
+                                    easing.type: Easing.InOutQuad
+                                }
+                            }
+                        }
+
+                        Rectangle {
+                            id: secRect
+                            Layout.alignment: Qt.AlignVCenter
+                            color: 'transparent'
+                            Layout.preferredWidth: cpuMon.contentWidth
+                            Layout.fillHeight: true
+                            Layout.minimumHeight: 15
+                            Layout.preferredHeight: 28
+                            Layout.leftMargin: 3
+
+                            Behavior on Layout.preferredWidth {
+                                NumberAnimation {
+                                    duration: 150
+                                    easing.type: Easing.InOutQuad
+                                }
+                            }
+
+                            CpuMonitor {
+                                id: cpuMon
+                            }
+                        }
+
+                        Rectangle {
+                            id: tempRow
+                            Layout.alignment: Qt.AlignVCenter
+                            color: 'transparent'
+                            Layout.preferredWidth: tempMon.contentWidth
+                            Layout.fillHeight: true
+                            Layout.minimumHeight: 15
+                            Layout.preferredHeight: 28
+                            Layout.leftMargin: 0
+
+                            Behavior on Layout.preferredWidth {
+                                NumberAnimation {
+                                    duration: 150
+                                    easing.type: Easing.InOutQuad
+                                }
+                            }
+
+                            CPUTemp {
+                                id: tempMon
+                            }
+                        }
+
+                        Rectangle {
+                            Layout.alignment: Qt.AlignVCenter
+                            color: 'transparent'
+                            Layout.preferredWidth: ramMon.contentWidth
+                            Layout.fillHeight: true
+                            Layout.minimumHeight: 15
+                            Layout.preferredHeight: 28
+                            Layout.leftMargin: 0
+
+                            Behavior on Layout.preferredWidth {
+                                NumberAnimation {
+                                    duration: 150
+                                    easing.type: Easing.InOutQuad
+                                }
+                            }
+
+                            RamUsage {
+                                id: ramMon
+                            }
+                        }
+
+                        Rectangle {
+                            Layout.alignment: Qt.AlignVCenter
+                            color: 'transparent'
+
+                            // fixed slot: height is fixed, width follows the icons, capped at 570
+                            Layout.preferredWidth: activeApps.implicitWidth
+                            Layout.maximumWidth: 570
+                            Layout.preferredHeight: 28
+                            Layout.fillHeight: true
+                            Layout.minimumHeight: 15
+                            Layout.leftMargin: 4
+
+                            Behavior on Layout.preferredWidth {
+                                NumberAnimation {
+                                    duration: 150
+                                    easing.type: Easing.InOutQuad
+                                }
+                            }
+
+                            ActiveApps {
+                                id: activeApps
+                            }
+                        }
+
+                        Item {
+                            Layout.fillWidth: true
                         }
                     }
                 }
-
-                Rectangle {
-                    id: secRect
-                    Layout.alignment: Qt.AlignVCenter
-                    color: 'transparent'
+                Item {
                     Layout.fillWidth: true
-                    // Layout.minimumWidth: 30
-                    Layout.preferredWidth: 120
-                    Layout.maximumWidth: 120
-
+                    Layout.preferredWidth: 1
                     Layout.fillHeight: true
-                    Layout.minimumHeight: 15
-                    Layout.preferredHeight: 28
-                    Layout.leftMargin: 3
-
-                    CpuMonitor {}
-                    // CPUHoverDetails {
-                    //     popupOpen: root.popupOpen
-                    //     // anchors.left: tempRow.width
-                    //     // anchors.top: parent.height
-                    //     // Component.onCompleted: Qt.callLater (() => {
-                    //     //   console.log("x: ", parent.x);
-                    //     //   console.log("y: ", tempRow.height);
-                    //     // })
-                    // }
-                }
-
-                Rectangle {
-                    id: tempRow
-                    Layout.alignment: Qt.AlignVCenter
-                    color: 'transparent'
-                    Layout.fillWidth: true
-                    // Layout.minimumWidth: 30
-                    Layout.preferredWidth: 80
-                    Layout.maximumWidth: 80
-
-                    Layout.fillHeight: true
-                    Layout.minimumHeight: 15
-                    Layout.preferredHeight: 28
-                    CPUTemp {}
-                }
-
-                Rectangle {
-                    Layout.alignment: Qt.AlignVCenter
-                    color: 'transparent'
-                    Layout.fillWidth: true
-                    Layout.minimumWidth: 70
-                    Layout.preferredWidth: 70
-                    Layout.maximumWidth: 70
-
-                    Layout.fillHeight: true
-                    Layout.minimumHeight: 15
-                    Layout.preferredHeight: 28
-
-                    RamUsage {}
-                }
-
-                Rectangle {
-                    color: 'transparent'
-                    Layout.fillWidth: true
-                    Layout.minimumWidth: 100
-                    Layout.preferredWidth: 200
-                    Layout.fillHeight: true
-                    Layout.minimumHeight: 15
-                    Layout.preferredHeight: 28
-                    Text {
+                    clip: true
+                    DateTime {
                         anchors.centerIn: parent
-                        text: parent.width + 'x' + parent.height
+                        // Layout.alignment: Qt.AlignHCenter
                     }
-
-                    // WorkspaceWithApps {}
                 }
+                Item {
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: 1
+                    Layout.fillHeight: true
+                    clip: true
 
-                DateTime {
-                    anchors.centerIn: parent
-                    // Layout.alignment: Qt.AlignHCenter
+                    RowLayout {
+                        anchors.fill: parent
+                        spacing: 4
+                        Item {
+                            Layout.fillWidth: true
+                        }   // pushes future modules to the right edge
+                        // ...network, volume, battery, etc. go here later...
+
+                        Brightness {
+                            Layout.alignment: Qt.AlignVCenter
+                        }
+
+                        Volume {
+                            Layout.alignment: Qt.AlignVCenter
+                        }
+
+                        BluetoothButton {
+                            Layout.alignment: Qt.AlignVCenter
+                        }
+
+                        WarpButton {
+                            Layout.alignment: Qt.AlignVCenter
+                        }
+
+                        Rectangle {
+                            Layout.alignment: Qt.AlignVCenter
+                            color: 'transparent'
+                            Layout.preferredWidth: wifiMon.contentWidth
+                            Layout.preferredHeight: 28
+                            Layout.leftMargin: 4
+
+                            Behavior on Layout.preferredWidth {
+                                NumberAnimation {
+                                    duration: 150
+                                    easing.type: Easing.InOutQuad
+                                }
+                            }
+
+                            Wifi {
+                                id: wifiMon
+                            }
+                        }
+
+                        Rectangle {
+                            Layout.alignment: Qt.AlignVCenter
+                            color: 'transparent'
+                            Layout.preferredWidth: batMon.contentWidth
+                            Layout.preferredHeight: 28
+                            Layout.leftMargin: 4
+                            visible: true
+                            // visible: batMon.visible
+
+                            Behavior on Layout.preferredWidth {
+                                NumberAnimation {
+                                    duration: 150
+                                    easing.type: Easing.InOutQuad
+                                }
+                            }
+
+                            Battery {
+                                id: batMon
+                            }
+                        }
+
+                        BarButton {
+                            Layout.alignment: Qt.AlignVCenter
+                            label: "󰂜"
+                            fontSize: 15
+                            command: ["swaync-client", "-t", "-sw"]
+                        }
+
+                        BarButton {
+                            Layout.alignment: Qt.AlignVCenter
+                            label: "󰐥"
+                            command: ["wlogout"]
+                        }
+                    }
                 }
             }
         }

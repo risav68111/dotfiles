@@ -6,6 +6,8 @@ import "../service"
 
 Rectangle {
     id: ramMonitor
+
+    readonly property real contentWidth: Math.ceil((ramLabel.implicitWidth + 24) / 8) * 8
     anchors.centerIn: parent
     Layout.alignment: Qt.AlignVCenter
     height: parent.height - 4
@@ -33,6 +35,7 @@ Rectangle {
     }
 
     Text {
+        id: ramLabel
         anchors.centerIn: parent
         color: "#c6d0f5"
         text: ResourceUsage.memoryUsage + "/" + ResourceUsage.totalMemory + "G"

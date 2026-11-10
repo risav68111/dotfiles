@@ -14,6 +14,7 @@ import QtQuick.Controls
 // height: parent.height
 // width: parent.width
 Rectangle {
+    readonly property real contentWidth: Math.ceil((cpuLabel.implicitWidth + 24) / 8) * 8
     id: cpuMonitor
     anchors.centerIn: parent
     Layout.alignment: Qt.AlignVCenter
@@ -44,7 +45,7 @@ Rectangle {
     }
 
     property var cpuUsage: ResourceUsage.cpuUsage ?? 0
-    property var topProcs: ResourceUsage.topProcesses
+    // property var topProcs: ResourceUsage.topProcesses
 
     property string cpuIcon: icons[Math.min(Math.floor(parseFloat(cpuUsage) / 12.5), 7)]
     property var icons: ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
@@ -58,6 +59,7 @@ Rectangle {
     }
 
     Text {
+        id: cpuLabel
         anchors.centerIn: parent
         text: parent.barsForEachProcessor(ResourceUsage.coreUsages, parent.icons) + " " + cpuMonitor.cpuUsage + "%"
 

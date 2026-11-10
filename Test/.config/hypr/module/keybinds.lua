@@ -2,7 +2,7 @@
 
 hl.bind(MAIN_MOD .. " + Return", hl.dsp.exec_cmd(TERMINAL)) --terminal
 hl.bind(MAIN_MOD .. " + Space", hl.dsp.exec_cmd(MENU))      --app select menu rofi
-hl.bind(MAIN_MOD .. " + E", hl.dsp.exec_cmd(FILE_MANAGER))      -- file manager
+hl.bind(MAIN_MOD .. " + E", hl.dsp.exec_cmd(FILE_MANAGER))  -- file manager
 hl.bind(MAIN_MOD .. " + C", hl.dsp.window.close())          -- Close window
 
 --screenshots
@@ -15,8 +15,16 @@ hl.bind(MAIN_MOD .. " + M", hl.dsp.exec_cmd("wlogout"))                         
 hl.bind(MAIN_MOD .. " + T", hl.dsp.exec_cmd("~/.config/scripts/theme_switcher.sh"))            -- theme selector
 hl.bind(MAIN_MOD .. " + W", hl.dsp.exec_cmd("~/.config/scripts/wallpaper.sh"))                 -- wallpaper randomizer
 hl.bind(MAIN_MOD .. " + SHIFT + W", hl.dsp.exec_cmd("~/.config/scripts/wallpaper.sh s"))       -- wallpaper selector
-hl.bind(MAIN_MOD .. " + SHIFT + V",
-  hl.dsp.exec_cmd("cliphist list | rofi -dmenu -p \"Clipboard\" | cliphist decode | wl-copy")) -- Clipboard
+-- hl.bind(
+--     MAIN_MOD .. " + SHIFT + V",
+--     hl.dsp.exec_cmd(
+--         'rofi -modi "clipboard:$HOME/.config/scripts/cliphist-rofi.sh" -show clipboard -theme ~/.config/rofi/config.rasi'
+--     )
+-- )
+hl.bind(MAIN_MOD .." + SHIFT + V", hl.dsp.exec_cmd("qs -p ~/.config/quickshell/clipboard ipc call clipboard toggle")) -- quickshell clipboard
+
+-- hl.bind(MAIN_MOD .. " + SHIFT + V",
+--   hl.dsp.exec_cmd("cliphist list | rofi -dmenu -p \"Clipboard\" | cliphist decode | wl-copy")) -- Clipboard
 
 hl.bind(MAIN_MOD .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(MAIN_MOD .. " + P", hl.dsp.window.pseudo())
@@ -29,6 +37,11 @@ hl.bind(MAIN_MOD .. " + L", hl.dsp.focus({ direction = "right" }))
 hl.bind(MAIN_MOD .. " + K", hl.dsp.focus({ direction = "up" }))
 hl.bind(MAIN_MOD .. " + J", hl.dsp.focus({ direction = "down" }))
 
+-- move window
+hl.bind(MAIN_MOD .. " + CTRL + H", hl.dsp.window.move({ direction = "left" }))
+hl.bind(MAIN_MOD .. " + CTRL + L", hl.dsp.window.move({ direction = "right" }))
+hl.bind(MAIN_MOD .. " + CTRL + K", hl.dsp.window.move({ direction = "up" }))
+hl.bind(MAIN_MOD .. " + CTRL + J", hl.dsp.window.move({ direction = "down" }))
 
 -- resize active window
 hl.bind(MAIN_MOD .. " + SHIFT + H", hl.dsp.window.resize({ x = -30, y = 0, relative = true }), { repeating = true })
@@ -77,3 +90,7 @@ hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
+
+-- TODO: add keybinds to clear ram and delete cliphist
+-- ~/.cache/cliphist/db
+-- sync && sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'

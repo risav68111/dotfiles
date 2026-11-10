@@ -6,6 +6,9 @@ import Quickshell.Io
 
 Rectangle {
     id: cpuTempMonitor
+    // radius: 6
+    readonly property real contentWidth: Math.ceil((tempLabel.implicitWidth + 10) / 8) * 8
+
     anchors.centerIn: parent
     Layout.alignment: Qt.AlignVCenter
     height: parent.height - 4
@@ -28,6 +31,7 @@ Rectangle {
     }
 
     Text {
+        id: tempLabel
         anchors.centerIn: parent
         text:  ResourceUsage.cpuTemp + "℃  | " + ResourceUsage.gpuTemp + "℃ "
         color: "#c6d0f5"

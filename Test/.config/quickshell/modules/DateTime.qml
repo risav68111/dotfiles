@@ -6,7 +6,7 @@ Rectangle {
     property var color_on_hover: "#1a3b30"
     // anchors.centerIn: parent
     height: 32
-    width: 110
+    width: 130
     color: color_on_hover
     radius: 30
 
@@ -15,8 +15,10 @@ Rectangle {
         anchors.centerIn: parent
         // Layout.alignment: Qt.AlignHCenter
         spacing: 2
-        anchors.leftMargin: 12
-        anchors.rightMargin: 12
+        Layout.leftMargin: 12
+        Layout.rightMargin: 12
+        // anchors.leftMargin: 12
+        // anchors.rightMargin: 12
         property int fontPixelSize: 9
         height: parent.height
 

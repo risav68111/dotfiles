@@ -15,18 +15,6 @@ PanelWindow {
     implicitHeight: 160
     color: "transparent"
 
-    // Component.onCompleted: Qt.callLater(() => {
-    //   console.log("popup x:", x, "y:", y)
-    //   console.log("popup width:", width, "height:", height)
-    //   console.log("margins left:", margins.left, "top:", margins.top)
-    //   console.log("screen:", screen ? screen.name : "none")
-    //   console.log("screen width:", screen ? screen.width : 0, "height:", screen ? screen.height : 0)
-    // })
-
-    // Component.onCompleted: Qt.callLater(() => {
-    //     console.log("xPos: ", parent.x);
-    //     console.log("yPos: ", parent.height);
-    // })
     margins.left: parent.x + 11
     margins.top: parent.height + 6
 
@@ -36,148 +24,82 @@ PanelWindow {
         onHoveredChanged: popupOpen = hovered
     }
 
-    // property  color hoverBgColor: "#
+    // palette shared with the bar
+    readonly property color bgColor: "#e61a1b26"      // AARRGGBB, ~90% opaque
+    readonly property color trackColor: "#2a2b3a"
+    readonly property color textColor: "#c6d0f5"
+    readonly property color accent: "#7aa2f7"
+    readonly property color warn: "#e0af68"
+    readonly property color hot: "#f7768e"
+
+    function usageColor(u) {
+        return u >= 85 ? hot : (u >= 60 ? warn : accent);
+    }
+
     Rectangle {
         id: rectInHoverWin
         anchors.fill: parent
         radius: 8
-        color: "yellow"
-        function barsForProcessor(procUsages, i) {
-            const icons = ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"];
-            let coreUsage = procUsages[i];
-            return icons[Math.min(Math.floor(parseFloat(coreUsage) / 12.5), 7)] + " " + coreUsage + " %" + "  -  " + (i + 1);
-        }
-
-        gradient: Gradient {
-            // orientation: Gradient.Horizontal
-
-            GradientStop {
-                position: 0.9
-                color: "#555555"
-            }
-
-            GradientStop {
-                position: 0.1
-                color: "#666666"
-            }
-        }
+        color: cpuPopup.bgColor
+        border.width: 1
+        border.color: "#33c6d0f5"
 
         ColumnLayout {
-            id: cpuUsagesfinal
-            // Layout.alignment: Qt.AlignVCenter
             anchors.fill: parent
-            // anchors.leftMargin: 8
+            anchors.margins: 6
             spacing: 0
-            // ResourceUsage.coreUsages
 
             Repeater {
                 model: ResourceUsage.coreUsages.length
-                Rectangle {
+
+                Item {
+                    id: row
                     required property int index
+                    property real usage: ResourceUsage.coreUsages[index] ?? 0
+
                     Layout.fillWidth: true
-                    Layout.preferredHeight: cpuPopup.height / ResourceUsage.coreUsages.length
-                    property int radiusOfSides: 10
-                    color: "transparent"
-                    // topLeftRadius: index==0 ? radiusOfSides: 0
-                    // topRightRadius: index==0 ? radiusOfSides: 0
-                    // bottomLeftRadius: index == ResourceUsage.coreUsages.length - 1 ? radiusOfSides : 0
-                    // bottomRightRadius: index == ResourceUsage.coreUsages.length - 1 ? radiusOfSides : 0
+                    Layout.fillHeight: true
 
                     RowLayout {
                         anchors.fill: parent
-                        spacing: 3
+                        anchors.topMargin: 1
+                        anchors.bottomMargin: 1
+                        spacing: 6
 
-                        Rectangle {
-                            Layout.fillHeight: true
-                            Layout.preferredWidth: parent.width / 2.58
-                            // height: parent.height
-                            // width: parent.width / 2.58
-                            Layout.leftMargin: 5
-                            property int radiusOfSides: 10
-                            topLeftRadius: parent.parent.index == 0 ? radiusOfSides : 0
-                            color: "transparent"
-                            // topRightRadius: index == 0 ? radiusOfSides : 0
-                            bottomLeftRadius: parent.index == ResourceUsage.coreUsages.length - 1 ? radiusOfSides : 0
-                            // bottomRightRadius: index == ResourceUsage.coreUsages.length - 1 ? radiusOfSides : 0
-                            Text {
-                                anchors.fill: parent
-                                text: (parent.parent.parent.index + 1) + " : " + ResourceUsage.coreUsages[parent.parent.parent.index] + " %"
-                                font.pixelSize: 11
-                            }
+                        Text {
+                            Layout.preferredWidth: 62
+                            Layout.alignment: Qt.AlignVCenter
+                            text: (row.index + 1) + " : " + row.usage + " %"
+                            color: cpuPopup.textColor
+                            font.pixelSize: 11
+                            font.bold: true
                         }
 
                         Rectangle {
-                            // Layout.alignment: Qt.AlignVCenter
                             Layout.fillWidth: true
                             Layout.fillHeight: true
-                            // width: (parent.width * ResourceUsage.coreUsages[parent.parent.index]) / 100
-                            // color: "red"
                             radius: 3
+                            color: cpuPopup.trackColor
 
-                            gradient: Gradient {
-                                // orientation: Gradient.Horizontal
-
-                                GradientStop {
-                                    position: 0.9
-                                    color: "#555555"
-                                }
-
-                                GradientStop {
-                                    position: 0.1
-                                    color: "#666666"
-                                }
-                            }
                             Rectangle {
                                 anchors.left: parent.left
                                 anchors.top: parent.top
                                 anchors.bottom: parent.bottom
-                                width: parent.width * (ResourceUsage.coreUsages[parent.parent.parent.index] / 100)
-                                // color: "blue"
+                                width: parent.width * (row.usage / 100)
                                 radius: 3
+                                color: cpuPopup.usageColor(row.usage)
 
-                                gradient: Gradient {
-                                    // orientation: Gradient.Horizontal
-
-                                    GradientStop {
-                                        position: 0.9
-                                        color: "#555555"
-                                    }
-
-                                    GradientStop {
-                                        position: 0.1
-                                        color: "#333333"
+                                Behavior on width {
+                                    NumberAnimation {
+                                        duration: 300
+                                        easing.type: Easing.InOutQuad
                                     }
                                 }
-                            }
-                            Behavior on width {
-                                NumberAnimation {
-                                    duration: 300
-                                    easing.type: InOutQuad
+                                Behavior on color {
+                                    ColorAnimation { duration: 300 }
                                 }
                             }
                         }
-
-                        // anchors.centerIn:parent
-                        // Layout.alignment: Qt.AlignVCenter
-                        // width: parent.width
-                        // height: 8
-                        // color: "red"
-                        // Text {
-                        //     anchors.fill: parent
-                        //     // Layout.alignment: Qt.AlignVCenter
-                        //     // Layout.fillWidth: true
-                        //     // Layout.fillHeight: true
-                        //     // Component.onCompleted: Qt.callLater(() => {
-                        //     //     console.log("ResourceUsage.coreUsages: ", ResourceUsage.coreUsages);
-                        //     // })
-                        //     // anchors.centerIn: parent
-                        //     text: rectInHoverWin.barsForProcessor(ResourceUsage.coreUsages, parent.index)
-                        //
-                        //     //  + " " + cpuMonitor.cpuIcon + " " + cpuMonitor.cpuUsage + "%"
-                        //     // text: " " + topProcs[0]
-                        //     color: "#000000"
-                        //     font.pixelSize: 13
-                        // }
                     }
                 }
             }
