@@ -11,7 +11,7 @@ BarButton {
     fontSize: 15
 
     // left click: connect
-    command: ["sh", "-c", "~/.config/scripts/warp_connect.sh"]
+    command: ["warp-cli", "connect"]
 
     // status poll, every 3s like your Waybar interval
     Process {
@@ -32,7 +32,7 @@ BarButton {
     // right click: disconnect
     Process {
         id: disconnectProc
-        command: ["sh", "-c", "~/.config/scripts/warp_disconnect.sh"]
+        command: ["warp-cli", "disconnect"]
     }
     MouseArea {
         anchors.fill: parent
